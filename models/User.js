@@ -1,5 +1,5 @@
-const mongoose = require('mongoose');
-const bcrypt = require('bcryptjs');
+const mongoose = require('mongoose'); //для работы с MongoDB
+const bcrypt = require('bcryptjs'); //для шифровки паролей
 
 // Схема для пользователя
 const userSchema = new mongoose.Schema({

@@ -1,8 +1,8 @@
-const express = require('express');
-const passport = require('passport');
-const jwt = require('jsonwebtoken');
-const User = require('../models/User');
-const router = express.Router();
+const express = require('express'); // создание маршрутов и обработки HTTP-запросов
+const passport = require('passport'); //библиотека для аутентификации
+const jwt = require('jsonwebtoken'); //генератор и проверка токенов
+const User = require('../models/User'); //модель юзера для работы с MongoDB
+const router = express.Router();  //экземпляр маршрутизатора Express для организации маршрутов
 
 // Функция для генерации токена
 const generateToken = (user) => {
@@ -76,4 +76,4 @@ router.get('/profile', async (req, res) => {
     }
 });
 
-module.exports = router;
+module.exports = router; // для использования в других файлах (server.js)

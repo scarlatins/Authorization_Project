@@ -1,28 +1,28 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const dotenv = require('dotenv');
-const passport = require('passport');
-const bodyParser = require('body-parser');
-const cors = require('cors');
+const express = require('express'); // Подключение Express для создания сервера
+const mongoose = require('mongoose'); //для работы с MongoDB
+const dotenv = require('dotenv'); // Подключение dotenv для работы с переменными окружения
+const passport = require('passport'); // Подключение Passport для авторизации
+const bodyParser = require('body-parser'); // Подключение body-parser для обработки JSON-запросов
+const cors = require('cors'); // Подключение CORS для разрешения запросов с других доменов
 
-dotenv.config();
-const app = express();
+dotenv.config(); // Загрузка переменных окружения из файла .env
+const app = express(); // Создание экземпляра приложения Express
 
-// MongoDB Connection
+// Подключение к MongoDB
 mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
-    .then(() => console.log('MongoDB подключен'))
-    .catch(err => console.error(err));
+    .then(() => console.log('MongoDB подключен')) 
+    .catch(err => console.error(err)); // Вывод ошибки, если подключение не удалось
 
-// Middleware
-app.use(bodyParser.json());
-app.use(cors());
-app.use(passport.initialize());
-require('./config/passportConfig')(passport);
+// Middleware для обработки запросов
+app.use(bodyParser.json()); // Обработка JSON в теле запросов
+app.use(cors()); // Разрешение кросс-доменных запросов
+app.use(passport.initialize()); // Инициализация Passport для работы с авторизацией
+require('./config/passportConfig')(passport); // Импорт и настройка конфигурации Passport
 
-// Routes
-app.use('/auth', require('./routes/auth'));
-app.use('/tests', require('./routes/testRoutes')); // Подключение маршрутов для тестов
+// Определение маршрутов
+app.use('/auth', require('./routes/auth')); // Маршруты для авторизации
+app.use('/tests', require('./routes/testRoutes')); // Маршруты для работы с тестами
 
-// Server
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Сервер работает на порту ${PORT}`));
+// Запуск сервера
+const PORT = process.env.PORT || 3000; // Установка порта 
+app.listen(PORT, () => console.log(`Сервер работает на порту ${PORT}`)); // Запуск сервера и вывод сообщения о запуске
